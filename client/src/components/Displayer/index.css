@@ -1,0 +1,44 @@
+.displayer {
+  margin-top: 10px;
+  margin-left: var(--side-padding);
+  margin-right: var(--side-padding);
+  margin-bottom: 30px !important;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.post-header .description {
+  margin-bottom: 0;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+}
+
+.header-icons > * {
+  padding: 8px 16px;
+}
+
+.header-icons i {
+  font-size: 150%;
+  cursor: pointer;
+}
+
+.edit {
+  margin-top: 4px;
+}
+
+.post-img {
+  margin-bottom: 15px;
+}
+
+.post-img img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}

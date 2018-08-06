@@ -1,0 +1,18 @@
+.section-line {
+  margin: 0 var(--side-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  text-transform: uppercase;
+  color: var(--dark-grey-color);
+  border-bottom: 1px solid var(--light-grey-color);
+  margin-bottom: 25px !important;
+}
+
+.section-title {
+  margin: 18px 0;
+}
+
+.link-button {
+  margin-bottom: 18px;
+}

@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600|Lora");
+
+:root {
+  --black-color: #292929;
+  --dark-grey-color: rgba(0, 0, 0, 0.54);
+  --light-grey-color: rgba(0, 0, 0, 0.15);
+  --green-color: #2a8f68;
+  --side-padding: 10%;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  list-style-type: none;
+  font-family: "Open Sans", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#root > *:not(.wrap) {
+  margin-bottom: 10px;
+}
+
+button,
+nav img {
+  cursor: pointer;
+}
+
+button {
+  padding: 6px 0;
+  width: 140px;
+  border-radius: 4px;
+  background: white;
+  color: var(--dark-grey-color);
+  border: 1px solid var(--light-grey-color);
+  font-size: 100%;
+  outline: 0;
+}
+
+button:hover {
+  transition: 0.5s;
+  border-color: var(--dark-grey-color);
+}
+
+.title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 140%;
+}
+
+.description {
+  color: var(--dark-grey-color);
+  font-size: 95%;
+  margin-bottom: 16px;
+}
+
+.info,
+.date {
+  font-size: 90%;
+}
+
+@media (max-width: 1400px) {
+  :root {
+    --side-padding: 5%;
+  }
+}
+
+@media (max-width: 800px) {
+  :root {
+    --side-padding: 25px;
+  }
+}
+
+@media (max-width: 500px) {
+  :root {
+    --side-padding: 15px;
+  }
+}
