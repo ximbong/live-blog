@@ -19,6 +19,18 @@ const NavBar = props => {
     </Link>
   );
 
+  const AvatarDropdown = (
+    <div className="avatar-dropdown">
+      <Link className="profile" to="/profile">
+        <div className="button--view-post">My posts</div>
+      </Link>
+      <div className="button--edit-profile">Edit Profile</div>
+      <div onClick={props.handleLogOut} className="button--logout">
+        Log out
+      </div>
+    </div>
+  );
+
   const Nav = (
     <nav>
       {LeftNavButton}
@@ -26,9 +38,10 @@ const NavBar = props => {
         <img src={MainIcon} alt="main-logo" className="main-logo" />
       </Link>
       <div className="avatar">
-        <Link to="/profile">
+        <Link className="profile" to="/profile">
           <img src={ProfilePic} alt="profile-pic" className="profile-img" />
         </Link>
+        {AvatarDropdown}
       </div>
     </nav>
   );

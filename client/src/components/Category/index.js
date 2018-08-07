@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import Post from "../Post";
-import { baseURL } from "../../baseURL";
 
 class Category extends Component {
   constructor(props) {
@@ -12,9 +11,8 @@ class Category extends Component {
   }
   componentDidMount() {
     const name = this.props.match.params.name;
-    const url = `${baseURL}/category/${name}`;
 
-    fetch(url)
+    fetch(`/category/${name}`)
       .then(res => res.json())
       .then(res =>
         this.setState({

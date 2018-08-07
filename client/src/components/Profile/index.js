@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import Post from "../Post";
-import { baseURL } from "../../baseURL";
 
 import "./index.css";
 
@@ -13,7 +12,7 @@ class Profile extends Component {
     };
   }
   componentDidMount() {
-    const url = `${baseURL}/profile`;
+    const url = `/profile`;
 
     fetch(url)
       .then(res => res.json())

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import Post from "../Post";
 import category from "../../category.js";
-import { baseURL } from "../../baseURL";
 
 import "./index.css";
 
@@ -16,7 +15,7 @@ class Main extends React.Component {
     };
   }
   componentDidMount() {
-    const dataURL = `${baseURL}/main`;
+    const dataURL = `/main`;
 
     fetch(dataURL)
       .then(res => res.json())

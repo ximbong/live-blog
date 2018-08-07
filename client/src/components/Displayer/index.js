@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import importAll from "../../handler";
-import { baseURL } from "../../baseURL";
-
 import "font-awesome/css/font-awesome.min.css";
 import "./index.css";
 
@@ -17,7 +14,7 @@ class Displayer extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    const url = `${baseURL}/post/${id}`;
+    const url = `/post/${id}`;
 
     fetch(url)
       .then(res => res.json())
@@ -30,7 +27,7 @@ class Displayer extends Component {
 
   handleDelete = () => {
     const id = this.props.match.params.id;
-    const url = `${baseURL}/post/${id}`;
+    const url = `/post/${id}`;
 
     fetch(url, {
       method: "DELETE"
@@ -39,10 +36,6 @@ class Displayer extends Component {
 
   render() {
     const { title, description, content, _id } = this.state.data;
-
-    const images = importAll(
-      require.context("../../../../simple-blog-backend/upload/", false, /.png/)
-    );
 
     return (
       <div className="displayer">
@@ -65,7 +58,7 @@ class Displayer extends Component {
           </div>
         </div>
         <div className="post-img">
-          <img src={images[`${_id}.png`]} alt="" />
+          {/* <img src={images[`${_id}.png`]} alt="" /> */}
         </div>
         <div className="content">{content}</div>
       </div>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
-import { baseURL } from "../../baseURL";
 import "./index.css";
 
 class LoginForm extends Component {
@@ -29,7 +28,7 @@ class LoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { action, redirect, ...data } = this.state;
-    const submitURL = `${baseURL}/${action}`;
+    const submitURL = `/${action}`;
 
     fetch(submitURL, {
       method: "POST",

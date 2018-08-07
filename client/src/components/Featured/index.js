@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import Post from "../Post";
-import { baseURL } from "../../baseURL";
 
 class Featured extends Component {
   constructor(props) {
@@ -11,7 +10,7 @@ class Featured extends Component {
     };
   }
   componentDidMount() {
-    const url = `${baseURL}/featured`;
+    const url = `/featured`;
 
     fetch(url)
       .then(res => res.json())

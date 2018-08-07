@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
-import importAll from "../../handler";
 import category from "../../category";
-import { baseURL } from "../../baseURL";
 
 import "./index.css";
 
@@ -25,7 +23,7 @@ class Editor extends Component {
   componentDidMount() {
     if (this.props.action === "edit") {
       const id = this.props.match.params.id;
-      const url = `${baseURL}/post/${id}`;
+      const url = `/post/${id}`;
 
       fetch(url)
         .then(res => res.json())
@@ -84,9 +82,9 @@ class Editor extends Component {
   handleSubmit = () => {
     const { redirect, _id, image, image_url, ...data } = this.state;
 
-    const uploadURL = `${baseURL}/upload`;
-    const postURL = `${baseURL}/post`;
-    const editURL = `${baseURL}/post/${_id}`;
+    const uploadURL = `/upload`;
+    const postURL = `/post`;
+    const editURL = `/post/${_id}`;
 
     const action = this.props.action;
 
@@ -147,10 +145,6 @@ class Editor extends Component {
       );
     });
 
-    const images = importAll(
-      require.context("../../../../simple-blog-backend/upload/", false, /.png/)
-    );
-
     return (
       <div className="editor">
         <div className="inputs">
@@ -186,11 +180,11 @@ class Editor extends Component {
             </div>
           </div>
           <div className="image_previewer">
-            <img
+            {/* <img
               id="target"
               src={imagePreviewer ? imagePreviewer : images[`${_id}.png`]}
               alt=""
-            />
+            /> */}
           </div>
         </div>
         <textarea
