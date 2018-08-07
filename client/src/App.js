@@ -16,17 +16,25 @@ import Category from "./components/Category";
 import Featured from "./components/Featured";
 import LoginForm from "./components/LoginForm";
 
-import { baseURL } from "./baseURL";
-
 import "./App.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenticated: this.checkAuth()
+      authenticated: false
     };
   }
+
+  componentDidMount = () => {
+    fetch("/auth")
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          authenticated: res
+        });
+      });
+  };
 
   toggleAuth = () => {
     this.setState({
@@ -34,10 +42,18 @@ class App extends Component {
     });
   };
 
-  checkAuth = () => {
-    const authURL = `${baseURL}/auth`;
+  handleLogOut = () => {
+    fetch("/logout")
+      .then(res => res.text())
+      .then(res => {
+        this.setState({
+          authenticated: false
+        });
+      });
+  };
 
-    return fetch(authURL)
+  checkAuth = () => {
+    fetch("/auth")
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -49,10 +65,17 @@ class App extends Component {
   render() {
     const { authenticated } = this.state;
 
+    console.log(authenticated);
+
     return (
       <Router>
         <React.Fragment>
-          <Route path="/" render={props => <NavBar {...props} />} />
+          <Route
+            path="/"
+            render={props => (
+              <NavBar {...props} handleLogOut={this.handleLogOut} />
+            )}
+          />
           <Route path="/simple-blog" exact={true} render={() => <Main />} />
 
           <Route path="/new" render={() => <SectionLine action="add" />} />
