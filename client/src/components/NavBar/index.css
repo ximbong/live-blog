@@ -10,16 +10,56 @@ nav .main-logo {
   height: 80px;
 }
 
+nav .profile {
+  padding-bottom: 10px;
+}
+
 nav .profile-img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 1px solid var(--light-grey-color);
-  margin-left: 100px;
 }
 
 nav .profile-img:hover {
   opacity: 0.8;
+}
+
+.avatar {
+  margin-left: 100px;
+  display: flex;
+  position: relative;
+}
+
+.avatar:hover .avatar-dropdown {
+  display: block;
+}
+
+.avatar-dropdown {
+  display: none;
+  position: absolute;
+  width: 100px;
+  left: -60px;
+  top: 50px;
+  width: 160px;
+  overflow: hidden;
+  color: var(--black-color);
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid var(--light-grey-color);
+}
+
+.avatar-dropdown div {
+  padding: 14px 20px;
+  background: white;
+}
+
+.avatar-dropdown div:hover {
+  background: #f1f1f1;
+}
+
+.button--edit-profile {
+  cursor: not-allowed;
 }
 
 @media (max-width: 550px) {
