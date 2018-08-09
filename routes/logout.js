@@ -4,9 +4,9 @@ const express = require("express"),
   User = require("../models/user");
 
 //handling user sign up
-
-router.post("/", function(req, res) {
+router.get("/", function(req, res) {
   req.logout();
+  res.send(true);
 });
 
 module.exports = router;
