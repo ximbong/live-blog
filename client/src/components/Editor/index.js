@@ -60,39 +60,23 @@ class Editor extends Component {
     this.setState({ image_url: event.target.files[0] });
   };
 
-  fetchImage = (_id, url, image_url) => {
-    const formData = new FormData();
-
-    formData.append("_id", _id);
-    formData.append("image_url", image_url);
-
-    fetch(url, {
-      method: "POST",
-      body: formData
-    })
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          _id: res._id,
-          redirect: true
-        });
-      });
-  };
-
   handleSubmit = () => {
-    const { redirect, _id, image, image_url, ...data } = this.state;
+    const { redirect, _id, imagePreviewer, ...data } = this.state;
+    const action = this.props.action;
 
-    const uploadURL = `/upload`;
     const postURL = `/post`;
     const editURL = `/post/${_id}`;
 
-    const action = this.props.action;
+    const formData = new FormData();
+    for (let field in data) {
+      formData.append(field, data[field]);
+    }
 
     //HANDLE EDIT ACTION ------------------
     if (action === "edit") {
       fetch(editURL, {
         method: "PUT",
-        body: JSON.stringify(data),
+        body: formData,
         headers: {
           "Content-Type": "application/json"
         }
@@ -104,23 +88,23 @@ class Editor extends Component {
               redirect: true
             });
         });
-
-      this.fetchImage(_id, uploadURL, image_url);
     }
 
     //HANDLE 'CREATE NEW' ACTION ------------------
     if (action === "add") {
       fetch(postURL, {
         method: "POST",
-        body: JSON.stringify(data),
+        body: formData,
         headers: {
           "Content-Type": "application/json"
         }
       })
         .then(res => res.json())
         .then(res => {
-          const _id = res._id;
-          return this.fetchImage(_id, uploadURL, image_url);
+          if (Object.keys(res).length > 0)
+            this.setState({
+              redirect: true
+            });
         });
     }
   };
