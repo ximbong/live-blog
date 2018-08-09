@@ -8,7 +8,7 @@
 }
 
 .wrap {
-  background: url("https://legacy-help.pro.photo/wp-content/uploads/2010/03/elegant_blog_bg-580x386.jpg");
+  background: linear-gradient(to right, silver, teal);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

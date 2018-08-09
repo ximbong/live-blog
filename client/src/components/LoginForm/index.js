@@ -25,6 +25,13 @@ class LoginForm extends Component {
     });
   };
 
+  emptyFields = () => {
+    this.setState({
+      username: "",
+      password: ""
+    });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const { action, redirect, ...data } = this.state;
@@ -42,14 +49,11 @@ class LoginForm extends Component {
         if (action === "login") {
           //handle login
           if (res === "true") {
-            this.props.toggleAuth();
+            this.props.handleLogIn();
             this.setState({ redirect: true });
           } else {
             alert("Wrong username or password!");
-            this.setState({
-              username: "",
-              password: ""
-            });
+            this.emptyFields();
           }
         } else {
           //handle register
@@ -57,10 +61,7 @@ class LoginForm extends Component {
             alert("Register success!");
           } else {
             alert(res);
-            this.setState({
-              username: "",
-              password: ""
-            });
+            this.emptyFields();
           }
         }
       });
