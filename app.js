@@ -2,8 +2,9 @@ const express = require("express"),
   app = express(),
   mongoose = require("mongoose"),
   passport = require("passport"),
-  localStrategy = require("passport-local"),
+  localStrategy = require("passport-local").Strategy,
   passportLocalMongoose = require("passport-local-mongoose"),
+  session = require("express-session"),
   loggedIn = require("./middleware"),
   User = require("./models/user"),
   mongoDB = "mongodb://127.0.0.1/simple-blog";
@@ -27,23 +28,15 @@ app.use(
     extended: true
   })
 );
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
-  next();
-});
 
 app.use(
-  require("express-session")({
+  session({
     secret: "ximbong91023",
-    resave: false,
-    saveUnitialized: false
+    resave: true,
+    saveUninitialized: true
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -62,4 +55,6 @@ app.use("/login", loginRoutes);
 app.use("/logout", logoutRoutes);
 app.use("/auth", loggedIn, authRoutes);
 
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
