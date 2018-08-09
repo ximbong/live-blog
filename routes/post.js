@@ -1,13 +1,48 @@
 const express = require("express"),
   router = express.Router(),
+  multer = require("multer"),
+  cloudinary = require("cloudinary"),
+  key = require("../config/key"),
   Post = require("../models/post");
 
-router.post("/", function(req, res) {
-  const post = req.body;
-  Post.create(post, function(err, post) {
-    err ? console.log(err) : res.json(post);
-  });
+//cloudinary config here
+cloudinary.config({
+  cloud_name: "ximbong91023",
+  api_key: key.api_key,
+  api_secret: key.api_secret
 });
+
+const upload = multer({ dest: "../tmp/uploads" });
+
+router.post("/", upload.single("image_url"), function(req, res, next) {
+  const { title, description, content, category } = req.body;
+  if (req.file) {
+    cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
+      const image_url = result.secure_url;
+
+      const post = {
+        title,
+        description,
+        content,
+        category,
+        image_url
+      };
+
+      const newPost = new Post(post);
+      newPost.save(function(err, post) {
+        if (err) return console.error(err);
+        res.json(post);
+      });
+    });
+  }
+});
+
+// router.post("/", function(req, res) {
+//   const post = req.body;
+//   Post.create(post, function(err, post) {
+//     err ? console.log(err) : res.json(post);
+//   });
+// });
 
 router.get("/:id", function(req, res) {
   const _id = req.params.id;
