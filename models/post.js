@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const postSchema = new mongoose.Schema({
+const postSchema = new Schema({
   title: String,
   category: String,
   description: String,
   content: String,
   image_url: String,
-  author_id: Number,
+  author: { type: Schema.Types.ObjectId, ref: "User" },
   featured: Boolean
 });
 
