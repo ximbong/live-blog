@@ -56,8 +56,9 @@ class App extends Component {
       .then(res => res.text())
       .then(res => {
         setTimeout(() => {
+          const isAuthenticated = res === "true"; //res is a string
           this.setState({
-            authenticated: res,
+            authenticated: isAuthenticated,
             loader: false
           });
         }, 2000);
