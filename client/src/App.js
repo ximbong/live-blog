@@ -15,6 +15,7 @@ import Main from "./components/Main";
 import Category from "./components/Category";
 import Featured from "./components/Featured";
 import LoginForm from "./components/LoginForm";
+import Loader from "./components/Loader";
 
 import "./App.css";
 
@@ -22,23 +23,19 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenticated: false
+      authenticated: false,
+      loader: true
     };
   }
 
   componentDidMount = () => {
-    fetch("/auth")
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          authenticated: res
-        });
-      });
+    this.checkAuth();
   };
 
-  toggleAuth = () => {
+  //submit (register/login) state is checked in loginForm
+  handleLogIn = () => {
     this.setState({
-      authenticated: !this.state.authenticated
+      authenticated: true
     });
   };
 
@@ -46,30 +43,40 @@ class App extends Component {
     fetch("/logout")
       .then(res => res.text())
       .then(res => {
-        this.setState({
-          authenticated: false
-        });
+        if (res === "true") {
+          this.setState({
+            authenticated: false
+          });
+        }
       });
   };
 
   checkAuth = () => {
     fetch("/auth")
-      .then(res => res.json())
+      .then(res => res.text())
       .then(res => {
-        this.setState({
-          authenticated: res
-        });
+        setTimeout(() => {
+          this.setState({
+            authenticated: res,
+            loader: false
+          });
+        }, 2000);
       });
   };
 
   render() {
-    const { authenticated } = this.state;
+    const { authenticated, loader } = this.state;
 
-    console.log(authenticated);
-
-    return (
+    const Routes = (
       <Router>
         <React.Fragment>
+          <Switch>
+            <Route
+              path="/login"
+              render={() => <LoginForm handleLogIn={this.handleLogIn} />}
+            />
+            {!authenticated && !loader && <Redirect to="/login" />}
+          </Switch>
           <Route
             path="/"
             render={props => (
@@ -119,16 +126,11 @@ class App extends Component {
             render={() => <SectionLine action="view_featured" />}
           />
           <Route path="/featured" render={() => <Featured />} />
-          <Switch>
-            <Route
-              path="/login"
-              render={() => <LoginForm toggleAuth={this.toggleAuth} />}
-            />
-            {!authenticated && <Redirect to="/login" />}
-          </Switch>
         </React.Fragment>
       </Router>
     );
+
+    return loader ? <Loader /> : Routes;
   }
 }
 
