@@ -14,35 +14,33 @@ cloudinary.config({
 
 const upload = multer({ dest: "../tmp/uploads" });
 
+const savePost = (title, description, content, category, image_url) => {
+  const post = {
+    title,
+    description,
+    content,
+    category,
+    image_url
+  };
+
+  const newPost = new Post(post);
+  newPost.save(function(err, post) {
+    if (err) return console.error(err);
+    res.json(post);
+  });
+};
+
 router.post("/", upload.single("image_url"), function(req, res, next) {
   const { title, description, content, category } = req.body;
   if (req.file) {
     cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
       const image_url = result.secure_url;
-
-      const post = {
-        title,
-        description,
-        content,
-        category,
-        image_url
-      };
-
-      const newPost = new Post(post);
-      newPost.save(function(err, post) {
-        if (err) return console.error(err);
-        res.json(post);
-      });
+      savePost(title, description, content, category, image_url);
     });
+  } else {
+    savePost(title, description, content, category, image_url);
   }
 });
-
-// router.post("/", function(req, res) {
-//   const post = req.body;
-//   Post.create(post, function(err, post) {
-//     err ? console.log(err) : res.json(post);
-//   });
-// });
 
 router.get("/:id", function(req, res) {
   const _id = req.params.id;
