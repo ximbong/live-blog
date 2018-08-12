@@ -76,15 +76,13 @@ class Editor extends Component {
     if (action === "edit") {
       fetch(editURL, {
         method: "PUT",
-        body: formData,
-        headers: {
-          "Content-Type": "application/json"
-        }
+        body: formData
       })
         .then(res => res.json())
         .then(res => {
           if (Object.keys(res).length > 0)
             this.setState({
+              _id: res._id,
               redirect: true
             });
         });
@@ -94,15 +92,13 @@ class Editor extends Component {
     if (action === "add") {
       fetch(postURL, {
         method: "POST",
-        body: formData,
-        headers: {
-          "Content-Type": "application/json"
-        }
+        body: formData
       })
         .then(res => res.json())
         .then(res => {
           if (Object.keys(res).length > 0)
             this.setState({
+              _id: res._id,
               redirect: true
             });
         });
