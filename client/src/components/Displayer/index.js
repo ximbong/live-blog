@@ -35,7 +35,7 @@ class Displayer extends Component {
   };
 
   render() {
-    const { title, description, content, _id } = this.state.data;
+    const { title, description, content, _id, image_url } = this.state.data;
 
     return (
       <div className="displayer">
@@ -58,7 +58,7 @@ class Displayer extends Component {
           </div>
         </div>
         <div className="post-img">
-          {/* <img src={images[`${_id}.png`]} alt="" /> */}
+          <img src={image_url} alt="" />
         </div>
         <div className="content">{content}</div>
       </div>

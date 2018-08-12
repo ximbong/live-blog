@@ -9,6 +9,7 @@ const Post = props => {
     description,
     _id,
     author_id,
+    image_url,
     category: category_id
   } = props.data;
 
@@ -18,7 +19,7 @@ const Post = props => {
     <Link to={`/post/${_id}`}>
       <div className="post">
         <div className="post-img">
-          {/* <img src={images[`${_id}.png`]} alt="" /> */}
+          <img src={image_url} alt="" />
         </div>
         <div className="post-data">
           <div>
