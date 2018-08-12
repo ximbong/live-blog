@@ -1,10 +1,13 @@
 const express = require("express"),
   router = express.Router(),
-  Post = require("../models/post");
+  User = require("../models/user");
 
 router.get("/", function(req, res) {
-  Post.find({ author_id: "0" }, function(err, posts) {
-    err ? console.log(err) : res.json(posts);
+  const userID = req.user._id;
+
+  User.findById(userID, function(err, user) {
+    console.log(user);
+    err ? console.log(err) : res.json(user.posts);
   });
 });
 
