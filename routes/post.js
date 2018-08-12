@@ -14,33 +14,32 @@ cloudinary.config({
 
 const upload = multer({ dest: "../tmp/uploads" });
 
-const savePost = (res, title, description, content, category, image_url, author) => {
-  const post = {
-    title,
-    description,
-    content,
-    category,
-    image_url,
-    author
-  };
-
-  const newPost = new Post(post);
-  newPost.save(function(err, post) {
-    if (err) return console.error(err);
-    res.json(post);
-  });
+const savePost = (post, res, _id) => {
+  if (_id) {
+    Post.findOneAndUpdate({ _id }, { $set: post }, function(err, posts) {
+      err ? console.log(err) : res.json(posts);
+    });
+  } else {
+    //no ID => create new post
+    const newPost = new Post(post);
+    newPost.save(function(err, post) {
+      if (err) return console.error(err);
+      res.json(post);
+    });
+  }
 };
 
 router.post("/", upload.single("image_url"), function(req, res, next) {
-  const { title, description, content, category } = req.body;
-  let image_url = "";
+  const newPost = req.body;
+  newPost.author = req.user._id;
+
   if (req.file) {
     cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
-      image_url = result.secure_url;
-      savePost(res, title, description, content, category, image_url, req.user._id);
+      newPost.image_url = result.secure_url;
+      savePost(newPost, res);
     });
   } else {
-    savePost(res, title, description, content, category, image_url, req.user._id);
+    savePost(newPost, res);
   }
 });
 
@@ -52,13 +51,20 @@ router.get("/:id", function(req, res) {
   });
 });
 
-router.put("/:id", function(req, res) {
-  const _id = req.params.id;
+router.put("/:id", upload.single("image_url"), function(req, res, next) {
   const post = req.body;
+  post.author = req.user._id;
 
-  Post.findOneAndUpdate({ _id }, { $set: post }, function(err, posts) {
-    err ? console.log(err) : res.json(posts);
-  });
+  const _id = req.params.id; //post ID
+
+  if (req.file) {
+    cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
+      post.image_url = result.secure_url;
+      savePost(post, res, _id);
+    });
+  } else {
+    savePost(post, res, _id);
+  }
 });
 
 router.delete("/:id", function(req, res) {
