@@ -1,6 +1,6 @@
 function loggedIn(req, res, next) {
   if (req.user) {
-    console.log("logged in already");
+    console.log(req.user);
     next();
   } else {
     console.log("not logged in");
