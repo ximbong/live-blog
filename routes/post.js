@@ -14,13 +14,14 @@ cloudinary.config({
 
 const upload = multer({ dest: "../tmp/uploads" });
 
-const savePost = (title, description, content, category, image_url) => {
+const savePost = (res, title, description, content, category, image_url, author) => {
   const post = {
     title,
     description,
     content,
     category,
-    image_url
+    image_url,
+    author
   };
 
   const newPost = new Post(post);
@@ -32,13 +33,14 @@ const savePost = (title, description, content, category, image_url) => {
 
 router.post("/", upload.single("image_url"), function(req, res, next) {
   const { title, description, content, category } = req.body;
+  let image_url = "";
   if (req.file) {
     cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
-      const image_url = result.secure_url;
-      savePost(title, description, content, category, image_url);
+      image_url = result.secure_url;
+      savePost(res, title, description, content, category, image_url, req.user._id);
     });
   } else {
-    savePost(title, description, content, category, image_url);
+    savePost(res, title, description, content, category, image_url, req.user._id);
   }
 });
 
