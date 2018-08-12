@@ -14,7 +14,6 @@ const categoryRoutes = require("./routes/category"),
   mainRoutes = require("./routes/main"),
   postRoutes = require("./routes/post"),
   profileRoutes = require("./routes/profile"),
-  uploadRoutes = require("./routes/upload"),
   registerRoutes = require("./routes/register"),
   loginRoutes = require("./routes/login"),
   logoutRoutes = require("./routes/logout"),
@@ -49,7 +48,6 @@ app.use("/featured", loggedIn, featuredRoutes);
 app.use("/main", loggedIn, mainRoutes);
 app.use("/post", loggedIn, postRoutes);
 app.use("/profile", loggedIn, profileRoutes);
-app.use("/upload", loggedIn, uploadRoutes);
 app.use("/register", registerRoutes);
 app.use("/login", loginRoutes);
 app.use("/logout", logoutRoutes);
