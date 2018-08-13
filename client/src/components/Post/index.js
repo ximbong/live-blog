@@ -8,7 +8,7 @@ const Post = props => {
     title,
     description,
     _id,
-    author_id,
+    author_username,
     image_url,
     category: category_id
   } = props.data;
@@ -28,7 +28,7 @@ const Post = props => {
           </div>
           <div>
             <div className="info">
-              Author {author_id} in {category_name}
+              Author {author_username} in {category_name}
             </div>
             <div className="date">Jul 2</div>
           </div>
