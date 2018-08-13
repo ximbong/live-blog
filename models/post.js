@@ -8,7 +8,8 @@ const postSchema = new Schema({
   description: String,
   content: String,
   image_url: String,
-  author: { type: Schema.Types.ObjectId, ref: "User" }
+  author: { type: Schema.Types.ObjectId, ref: "User" },
+  author_username: String //denormalize for post preview
 });
 
 module.exports = mongoose.model("Post", postSchema);

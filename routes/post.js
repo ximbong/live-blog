@@ -40,9 +40,12 @@ const savePost = (post, res, _id) => {
 };
 
 router.post("/", upload.single("image_url"), function(req, res, next) {
+  const { _id, username } = req.user;
+
   const newPost = {
     _id: new mongoose.Types.ObjectId(),
-    author: req.user._id,
+    author: _id,
+    author_username: username,
     ...req.body
   };
 
@@ -65,20 +68,22 @@ router.get("/:id", function(req, res) {
 });
 
 router.put("/:id", upload.single("image_url"), function(req, res, next) {
+  const { _id, username } = req.user;
+  const post_id = req.params.id; //post ID
+
   const post = {
-    author: req.user._id,
+    author: _id,
+    author_username: username,
     ...req.body
   };
-
-  const _id = req.params.id; //post ID
 
   if (req.file) {
     cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
       post.image_url = result.secure_url;
-      savePost(post, res, _id);
+      savePost(post, res, post_id);
     });
   } else {
-    savePost(post, res, _id);
+    savePost(post, res, post_id);
   }
 });
 
