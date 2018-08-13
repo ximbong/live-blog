@@ -2,8 +2,10 @@ const express = require("express"),
   router = express.Router(),
   multer = require("multer"),
   cloudinary = require("cloudinary"),
+  mongoose = require("mongoose"),
   key = require("../config/key"),
-  Post = require("../models/post");
+  Post = require("../models/post"),
+  User = require("../models/user");
 
 //cloudinary config here
 cloudinary.config({
@@ -25,13 +27,24 @@ const savePost = (post, res, _id) => {
     newPost.save(function(err, post) {
       if (err) return console.error(err);
       res.json(post);
+
+      User.findByIdAndUpdate(
+        newPost.author,
+        { $push: { posts: post._id } },
+        function(error, result) {
+          console.log(result);
+        }
+      );
     });
   }
 };
 
 router.post("/", upload.single("image_url"), function(req, res, next) {
-  const newPost = req.body;
-  newPost.author = req.user._id;
+  const newPost = {
+    _id: new mongoose.Types.ObjectId(),
+    author: req.user._id,
+    ...req.body
+  };
 
   if (req.file) {
     cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
@@ -52,8 +65,10 @@ router.get("/:id", function(req, res) {
 });
 
 router.put("/:id", upload.single("image_url"), function(req, res, next) {
-  const post = req.body;
-  post.author = req.user._id;
+  const post = {
+    author: req.user._id,
+    ...req.body
+  };
 
   const _id = req.params.id; //post ID
 
