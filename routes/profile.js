@@ -5,10 +5,12 @@ const express = require("express"),
 router.get("/", function(req, res) {
   const userID = req.user._id;
 
-  User.findById(userID, function(err, user) {
-    console.log(user);
-    err ? console.log(err) : res.json(user.posts);
-  });
+  User.findById(userID)
+    .populate("posts")
+    .exec(function(err, user) {
+      if (err) return console.log(err);
+      res.json(user.posts);
+    });
 });
 
 module.exports = router;
