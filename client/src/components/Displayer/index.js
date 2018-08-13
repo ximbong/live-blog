@@ -35,7 +35,32 @@ class Displayer extends Component {
   };
 
   render() {
-    const { title, description, content, _id, image_url } = this.state.data;
+    const username = this.props.username;
+    const {
+      title,
+      description,
+      content,
+      _id,
+      image_url,
+      author_username
+    } = this.state.data;
+
+    const displaySideButtons = author_username === username;
+
+    const sideButtons = (
+      <div className="header-icons">
+        <div className="edit">
+          <Link to={`/edit/${_id}`}>
+            <i className="fa fa-edit" />
+          </Link>
+        </div>
+        <div className="delete">
+          <Link to={`/simple-blog`}>
+            <i className="fa fa-trash" onClick={this.handleDelete} />
+          </Link>
+        </div>
+      </div>
+    );
 
     return (
       <div className="displayer">
@@ -44,18 +69,7 @@ class Displayer extends Component {
             <div className="title">{title}</div>
             <div className="description">{description}</div>
           </div>
-          <div className="header-icons">
-            <div className="edit">
-              <Link to={`/edit/${_id}`}>
-                <i className="fa fa-edit" />
-              </Link>
-            </div>
-            <div className="delete">
-              <Link to={`/simple-blog`}>
-                <i className="fa fa-trash" onClick={this.handleDelete} />
-              </Link>
-            </div>
-          </div>
+          {displaySideButtons && sideButtons}
         </div>
         <div className="post-img">
           <img src={image_url} alt="" />
