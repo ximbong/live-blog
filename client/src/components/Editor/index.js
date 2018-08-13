@@ -112,6 +112,7 @@ class Editor extends Component {
       description,
       content,
       category: category_name,
+      image_url,
       redirect,
       imagePreviewer
     } = this.state;
@@ -160,11 +161,11 @@ class Editor extends Component {
             </div>
           </div>
           <div className="image_previewer">
-            {/* <img
+            <img
               id="target"
-              src={imagePreviewer ? imagePreviewer : images[`${_id}.png`]}
+              src={imagePreviewer ? imagePreviewer : image_url}
               alt=""
-            /> */}
+            />
           </div>
         </div>
         <textarea
