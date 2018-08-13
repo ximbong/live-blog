@@ -24,7 +24,8 @@ class App extends Component {
     super(props);
     this.state = {
       authenticated: false,
-      loader: true
+      loader: true,
+      username: ""
     };
   }
 
@@ -33,9 +34,10 @@ class App extends Component {
   };
 
   //submit (register/login) state is checked in loginForm
-  handleLogIn = () => {
+  handleLogIn = username => {
     this.setState({
-      authenticated: true
+      authenticated: true,
+      username
     });
   };
 
@@ -66,7 +68,7 @@ class App extends Component {
   };
 
   render() {
-    const { authenticated, loader } = this.state;
+    const { authenticated, loader, username } = this.state;
 
     const Routes = (
       <Router>
@@ -96,7 +98,10 @@ class App extends Component {
             path="/post/:id"
             render={() => <SectionLine action="view" />}
           />
-          <Route path="/post/:id" render={props => <Displayer {...props} />} />
+          <Route
+            path="/post/:id"
+            render={props => <Displayer {...props} username={username} />}
+          />
 
           <Route
             path="/edit/:id"

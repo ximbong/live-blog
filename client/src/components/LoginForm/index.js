@@ -44,12 +44,12 @@ class LoginForm extends Component {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.text())
+      .then(res => res.json())
       .then(res => {
         if (action === "login") {
           //handle login
-          if (res === "true") {
-            this.props.handleLogIn();
+          if (res.username) {
+            this.props.handleLogIn(res.username);
             this.setState({ redirect: true });
           } else {
             alert("Wrong username or password!");
