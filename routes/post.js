@@ -71,20 +71,25 @@ router.put("/:id", upload.single("image_url"), function(req, res, next) {
   const { _id, username } = req.user;
   const post_id = req.params.id; //post ID
 
-  const post = {
-    author: _id,
-    author_username: username,
-    ...req.body
-  };
+  Post.findById(post_id, function(error, post) {
+    if (post.author_username === username) {
+      const post = {
+        author: _id,
+        author_username: username,
+        ...req.body
+      };
 
-  if (req.file) {
-    cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
-      post.image_url = result.secure_url;
-      savePost(post, res, post_id);
-    });
-  } else {
-    savePost(post, res, post_id);
-  }
+      if (req.file) {
+        cloudinary.v2.uploader.upload(req.file.path, function(error, result) {
+          post.image_url = result.secure_url;
+          savePost(post, res, post_id);
+        });
+      } else {
+        savePost(post, res, post_id);
+      }
+    }
+  });
+  // TODO: add unauthorize message response
 });
 
 router.delete("/:id", function(req, res) {
