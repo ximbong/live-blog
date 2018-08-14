@@ -46,7 +46,7 @@ class Editor extends Component {
     });
   };
 
-  imagePreviewer = event => {
+  imagePreviewerHandler = event => {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = e => {
@@ -153,7 +153,7 @@ class Editor extends Component {
                 type="file"
                 onChange={e => {
                   this.fileChangedHandler(e);
-                  this.imagePreviewer(e);
+                  this.imagePreviewerHandler(e);
                 }}
                 className="filetype"
                 id="group_image"
