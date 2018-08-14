@@ -93,7 +93,10 @@ router.put("/:id", upload.single("image_url"), function(req, res, next) {
 });
 
 router.delete("/:id", function(req, res) {
-  const _id = req.params.id;
+  const post_id = req.params.id;
+  const { _id } = req.user;
+
+  User.findByIdAndUpdate(_id, { $pull: { post_id } });
 
   Post.findOneAndRemove({ _id }, function(err, posts) {
     err ? console.log(err) : res.json(posts);
