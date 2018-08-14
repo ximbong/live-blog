@@ -18,7 +18,9 @@ router.post("/", function(req, res) {
       res.send(err.message);
     }
     passport.authenticate("local")(req, res, function() {
-      res.send(true);
+      res.send({
+        username
+      });
     });
   });
 });
