@@ -21,11 +21,10 @@ class Main extends React.Component {
       .then(res => res.json())
       .then(res => {
         if (res) {
-          const all_posts = res;
-          const featured_posts = res.filter(e => e.featured === true);
+          const { main, featured } = res;
           this.setState({
-            featured_posts: featured_posts,
-            all_posts: all_posts
+            featured_posts: featured,
+            all_posts: main
           });
         }
       });

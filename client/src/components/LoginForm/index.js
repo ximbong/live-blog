@@ -57,7 +57,7 @@ class LoginForm extends Component {
           }
         } else {
           //handle register
-          if (res === "true") {
+          if (res.username) {
             alert("Register success!");
           } else {
             alert(res);
