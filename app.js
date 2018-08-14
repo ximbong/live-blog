@@ -7,7 +7,7 @@ const express = require("express"),
   session = require("express-session"),
   loggedIn = require("./middleware"),
   User = require("./models/user"),
-  mongoDB = "mongodb://127.0.0.1/simple-blog";
+  key = require("./config/key");
 
 const categoryRoutes = require("./routes/category"),
   featuredRoutes = require("./routes/featured"),
@@ -18,6 +18,10 @@ const categoryRoutes = require("./routes/category"),
   loginRoutes = require("./routes/login"),
   logoutRoutes = require("./routes/logout"),
   authRoutes = require("./routes/auth");
+
+const mongoDB = `mongodb://${key.mLab_ID}:${
+  key.mLab_pw
+}@ds135061.mlab.com:35061/simple-blog`;
 
 mongoose.connect(mongoDB);
 
