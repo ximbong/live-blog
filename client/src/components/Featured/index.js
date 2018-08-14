@@ -14,11 +14,12 @@ class Featured extends Component {
 
     fetch(url)
       .then(res => res.json())
-      .then(res =>
+      .then(res => {
+        console.log(res);
         this.setState({
           data: res
-        })
-      );
+        });
+      });
   }
   render() {
     const PostList = this.state.data.map(e => {

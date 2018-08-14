@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
   _id: Schema.Types.ObjectId,
   title: String,
-  category: String,
+  category: String, // TODO: consider adding index
   description: String,
   content: String,
   image_url: String,
