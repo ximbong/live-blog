@@ -11,13 +11,13 @@ const express = require("express"),
 
 const categoryRoutes = require("./routes/category"),
   featuredRoutes = require("./routes/featured"),
-  mainRoutes = require("./routes/main"),
   postRoutes = require("./routes/post"),
   profileRoutes = require("./routes/profile"),
   registerRoutes = require("./routes/register"),
   loginRoutes = require("./routes/login"),
   logoutRoutes = require("./routes/logout"),
-  authRoutes = require("./routes/auth");
+  authRoutes = require("./routes/auth"),
+  popularRoutes = require("./routes/popular");
 
 const mongoDB = `mongodb://${key.mLab_ID}:${
   key.mLab_pw
@@ -47,15 +47,16 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use("/category", loggedIn, categoryRoutes);
-app.use("/featured", loggedIn, featuredRoutes);
-app.use("/main", loggedIn, mainRoutes);
-app.use("/post", loggedIn, postRoutes);
-app.use("/profile", loggedIn, profileRoutes);
 app.use("/register", registerRoutes);
 app.use("/login", loginRoutes);
 app.use("/logout", logoutRoutes);
+
+app.use("/category", loggedIn, categoryRoutes);
+app.use("/featured", featuredRoutes);
+app.use("/post", loggedIn, postRoutes);
+app.use("/profile", loggedIn, profileRoutes);
 app.use("/auth", loggedIn, authRoutes);
+app.use("/popular", loggedIn, popularRoutes);
 
 const port = process.env.PORT || 5000;
 
