@@ -8,8 +8,11 @@ const postSchema = new Schema({
   description: String,
   content: String,
   image_url: String,
+  views: { type: Number, index: true },
   author: { type: Schema.Types.ObjectId, ref: "User" },
   author_username: String //denormalize for post preview
 });
+
+postSchema.index({ views: -1 });
 
 module.exports = mongoose.model("Post", postSchema);
