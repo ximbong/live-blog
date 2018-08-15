@@ -39,6 +39,31 @@ const savePost = (post, res, _id) => {
   }
 };
 
+router.get("/:id", function(req, res) {
+  const post_id = req.params.id;
+  const { username } = req.user;
+
+  Post.findById(post_id, function(err, post) {
+    // if (post.author_username === username)
+    post.views += 1;
+    post.save(function(err) {
+      if (err) return console.error(err);
+    });
+    err ? console.log(err) : res.json(post);
+  });
+});
+
+router.get("/limit/:quantity", function(req, res) {
+  const quantity = parseInt(req.params.quantity, 10);
+
+  Post.find({})
+    .sort({ _id: -1 })
+    .limit(quantity)
+    .exec(function(err, posts) {
+      res.json(posts);
+    });
+});
+
 router.post("/", upload.single("image_url"), function(req, res, next) {
   const { _id, username } = req.user;
 
@@ -46,6 +71,7 @@ router.post("/", upload.single("image_url"), function(req, res, next) {
     _id: new mongoose.Types.ObjectId(),
     author: _id,
     author_username: username,
+    views: 1,
     ...req.body
   };
 
@@ -57,14 +83,6 @@ router.post("/", upload.single("image_url"), function(req, res, next) {
   } else {
     savePost(newPost, res);
   }
-});
-
-router.get("/:id", function(req, res) {
-  const _id = req.params.id;
-
-  Post.findOne({ _id }, function(err, posts) {
-    err ? console.log(err) : res.json(posts);
-  });
 });
 
 router.put("/:id", upload.single("image_url"), function(req, res, next) {
