@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Post from "../Post";
+import PopularPost from "../PopularPost";
 import category from "../../category.js";
 
 import "./index.css";
@@ -10,28 +11,35 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      featured_posts: [],
-      all_posts: []
+      featured: [],
+      recent: [],
+      popular: []
     };
   }
   componentDidMount() {
-    const dataURL = `/main`;
-
-    fetch(dataURL)
-      .then(res => res.json())
-      .then(res => {
-        if (res) {
-          const { main, featured } = res;
-          this.setState({
-            featured_posts: featured,
-            all_posts: main
-          });
-        }
+    Promise.all(this.generatePromises())
+      .then(response => Promise.all(response.map(response => response.json())))
+      .then(response => {
+        const [recent, featured, popular] = response;
+        this.setState({
+          recent,
+          featured,
+          popular
+        });
       });
   }
 
+  generatePromises = () => {
+    const recentURL = "/post/limit/20";
+    const featuredURL = "/featured/limit/7";
+    const popularURL = "/popular";
+
+    const urlArray = [recentURL, featuredURL, popularURL];
+    return urlArray.map(url => fetch(url));
+  };
+
   render() {
-    const { featured_posts, all_posts } = this.state;
+    const { recent, featured, popular } = this.state;
 
     const CategoryButtons = Object.keys(category).map(e => {
       return (
@@ -41,63 +49,39 @@ class Main extends React.Component {
       );
     });
 
-    const FeaturedPostList = featured_posts.map(e => {
+    const FeaturedPostList = featured.map(e => {
       return <Post data={e} key={e._id} />;
     });
 
-    const PostList = all_posts.map((e, i) => {
-      return <Post data={all_posts[i]} key={e._id} />;
+    const RecentPostList = recent.map((e, i) => {
+      return <Post data={e} key={e._id} />;
     });
 
-    const FirstColumnPost = FeaturedPostList[0];
-    const SecondColumnPost = FeaturedPostList.slice(1, 4);
-    const ThirdColumnPost = FeaturedPostList.slice(4, 7);
+    const PopularPostList = popular.map((e, i) => {
+      return <PopularPost data={e} key={e._id} rank={i} />;
+    });
 
     return (
       <React.Fragment>
         <div className="categories">{CategoryButtons}</div>
         <div className="featured">
-          <div className="featured-cols big-size">{FirstColumnPost}</div>
-          <div className="featured-cols small-size">{SecondColumnPost}</div>
+          <div className="featured-cols big-size">{FeaturedPostList[0]}</div>
+          <div className="featured-cols small-size">
+            {FeaturedPostList.slice(1, 4)}
+          </div>
           <div className="featured-cols small-size small-hidden">
-            {ThirdColumnPost}
+            {FeaturedPostList.slice(4, 7)}
           </div>
         </div>
         <div className="featured-button">
           <Link to="/featured">See all featured </Link>
         </div>
-
         <section>
-          <div className="section-main">{PostList}</div>
+          <div className="section-main">{RecentPostList}</div>
           <div className="section-side">
             <div className="popular-col">
               <div className="col-title title">Popular posts</div>
-              <div className="col-details">
-                <div className="post">
-                  <div className="ranking">01</div>
-                  <div className="post-data">
-                    <div className="title">The Gloves We'll Wear on Mars</div>
-                    <div className="description">
-                      The ultimate evening routine for cutting stress, creating
-                      momentum, and cultivating happiness
-                    </div>
-                    <div className="info">Author name in Category name</div>
-                    <div className="date">Jul 2</div>
-                  </div>
-                </div>
-                <div className="post">
-                  <div className="ranking">02</div>
-                  <div className="post-data">
-                    <div className="title">The Gloves We'll Wear on Mars</div>
-                    <div className="description">
-                      The ultimate evening routine for cutting stress, creating
-                      momentum, and cultivating happiness
-                    </div>
-                    <div className="info">Author name in Category name</div>
-                    <div className="date">Jul 2</div>
-                  </div>
-                </div>
-              </div>
+              <div className="col-details">{PopularPostList}</div>
             </div>
           </div>
         </section>
