@@ -15,14 +15,15 @@ class Featured extends Component {
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         this.setState({
           data: res
         });
       });
   }
   render() {
-    const PostList = this.state.data.map(e => {
+    const { data } = this.state;
+
+    const PostList = data.map(e => {
       return <Post data={e} key={e._id} />;
     });
 

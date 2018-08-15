@@ -22,11 +22,16 @@ class Category extends Component {
   }
 
   render() {
-    const PostList = this.state.data.map(e => {
+    const { data } = this.state;
+
+    const PostList = data.map(e => {
       return <Post data={e} key={e._id} />;
     });
 
-    return <div className="my-posts">{PostList}</div>;
+    const displayInfo =
+      data.length === 0 ? "There's nothing in this category" : PostList;
+
+    return <div className="my-posts">{displayInfo}</div>;
   }
 }
 
