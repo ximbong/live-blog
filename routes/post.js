@@ -114,10 +114,16 @@ router.delete("/:id", function(req, res) {
   const post_id = req.params.id;
   const { _id } = req.user;
 
-  User.findByIdAndUpdate(_id, { $pull: { post_id } });
+  User.findById(_id, function(err, user){
+    if (err) return console.error(err);
+    user.posts.pop(post_id);
+    user.save(function(err, post) {
+      if (err) return console.error(err);
+    })
+  })
 
-  Post.findOneAndRemove({ _id }, function(err, posts) {
-    err ? console.log(err) : res.json(posts);
+  Post.findByIdAndRemove(post_id, function(err, post) {
+    err ? console.log(err) : res.json(post);
   });
 });
 
