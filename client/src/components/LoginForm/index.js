@@ -44,7 +44,13 @@ class LoginForm extends Component {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.json())
+      .then(res => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return res.text();
+        }
+      })
       .then(res => {
         if (action === "login") {
           //handle login
@@ -60,7 +66,7 @@ class LoginForm extends Component {
           if (res.username) {
             alert("Register success!");
           } else {
-            alert(res);
+            alert(res.message);
             this.emptyFields();
           }
         }
