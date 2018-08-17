@@ -58,7 +58,7 @@ class Main extends React.Component {
     });
 
     const PopularPostList = popular.map((e, i) => {
-      return <PopularPost data={e} key={e._id} rank={i} />;
+      return <PopularPost data={e} key={e._id} rank={i + 1} />;
     });
 
     return (
