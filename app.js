@@ -5,6 +5,7 @@ const express = require("express"),
   localStrategy = require("passport-local").Strategy,
   passportLocalMongoose = require("passport-local-mongoose"),
   session = require("express-session"),
+  path = require("path"),
   loggedIn = require("./middleware"),
   User = require("./models/user"),
   key = require("./config/key");
@@ -24,6 +25,9 @@ const mongoDB = `mongodb://${key.mLab_ID}:${
 }@ds135061.mlab.com:35061/simple-blog`;
 
 mongoose.connect(mongoDB);
+
+// Serve React app
+app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use(express.json());
 app.use(
