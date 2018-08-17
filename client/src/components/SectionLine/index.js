@@ -16,7 +16,7 @@ const SectionLine = props => {
       title = "My Posts";
       break;
     case "view":
-      title = "My Post";
+      title = "View Post";
       break;
     case "view_category":
       const name = props.match.params.name;
