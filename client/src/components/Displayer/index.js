@@ -51,7 +51,7 @@ class Displayer extends Component {
       <div className="header-icons">
         <div className="edit">
           <Link to={`/edit/${_id}`}>
-            <i className="fa fa-edit" />
+            <i className="fa fa-pencil" />
           </Link>
         </div>
         <div className="delete">
@@ -71,7 +71,7 @@ class Displayer extends Component {
           </div>
           {displaySideButtons && sideButtons}
         </div>
-        <div className="post-img">
+        <div className="displayer-img">
           <img src={image_url} alt="" />
         </div>
         <div className="content">{content}</div>
