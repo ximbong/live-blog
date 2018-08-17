@@ -6,7 +6,8 @@ class Category extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      fetching: true
     };
   }
   componentDidMount() {
@@ -16,20 +17,23 @@ class Category extends Component {
       .then(res => res.json())
       .then(res =>
         this.setState({
-          data: res
+          data: res,
+          fetching: false
         })
       );
   }
 
   render() {
-    const { data } = this.state;
+    const { data, fetching } = this.state;
 
     const PostList = data.map(e => {
       return <Post data={e} key={e._id} />;
     });
 
     const displayInfo =
-      data.length === 0 ? "There's nothing in this category" : PostList;
+      !fetching && data.length === 0
+        ? "There's nothing in this category"
+        : PostList;
 
     return <div className="my-posts">{displayInfo}</div>;
   }
