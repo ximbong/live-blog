@@ -60,9 +60,9 @@
 
 .image_previewer img {
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   height: 160px;
-  width: 200px;
+  width: 160px;
 }
 
 .select_image {

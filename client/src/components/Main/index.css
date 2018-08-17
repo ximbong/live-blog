@@ -53,7 +53,11 @@
 .small-size .post-img > img {
   height: 100px;
   width: 100px;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+.image-cover {
+  object-fit: cover !important;
 }
 
 .small-size img {
@@ -111,7 +115,7 @@ section {
   padding: 0 var(--side-padding);
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-gap: 30px;
+  grid-gap: 50px;
 }
 
 .section-main .post {
@@ -129,7 +133,8 @@ section {
 .section-main .post-img > img {
   height: 150px;
   width: 150px;
-  object-fit: cover;
+  object-fit: scale-down;
+  object-position: center;
 }
 
 .section-main .post-data {
@@ -140,8 +145,8 @@ section {
 
 /* side */
 
-.section-side {
-  margin-left: 32px;
+.popular-col {
+  padding-left: 32px;
 }
 
 .section-side .description {
