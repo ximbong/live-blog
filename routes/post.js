@@ -44,11 +44,13 @@ router.get("/:id", function(req, res) {
   const { username } = req.user;
 
   Post.findById(post_id, function(err, post) {
-    // if (post.author_username === username)
-    post.views += 1;
-    post.save(function(err) {
-      if (err) return console.error(err);
-    });
+    if (post.author_username === username) {
+      //views increment doesn't count if the author views
+      post.views += 1;
+      post.save(function(err) {
+        if (err) return console.error(err);
+      });
+    }
     err ? console.log(err) : res.json(post);
   });
 });
@@ -114,13 +116,13 @@ router.delete("/:id", function(req, res) {
   const post_id = req.params.id;
   const { _id } = req.user;
 
-  User.findById(_id, function(err, user){
+  User.findById(_id, function(err, user) {
     if (err) return console.error(err);
     user.posts.pop(post_id);
     user.save(function(err, post) {
       if (err) return console.error(err);
-    })
-  })
+    });
+  });
 
   Post.findByIdAndRemove(post_id, function(err, post) {
     err ? console.log(err) : res.json(post);
