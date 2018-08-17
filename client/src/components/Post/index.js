@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import category from "../../category";
+import defaultImg from "../../assets/main-icon.png";
 
 const Post = props => {
   const {
@@ -19,7 +20,11 @@ const Post = props => {
     <Link to={`/post/${_id}`}>
       <div className="post">
         <div className="post-img">
-          <img src={image_url} alt="" />
+          <img
+            src={image_url ? image_url : defaultImg}
+            className={image_url && "image-cover"}
+            alt=""
+          />
         </div>
         <div className="post-data">
           <div>
