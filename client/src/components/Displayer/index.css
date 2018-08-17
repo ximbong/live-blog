@@ -22,6 +22,15 @@
 
 .header-icons > * {
   padding: 8px 16px;
+  transition: 0.5s;
+}
+
+.edit:hover {
+  color: #2d8263;
+}
+
+.delete:hover {
+  color: red;
 }
 
 .header-icons i {
