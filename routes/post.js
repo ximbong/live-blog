@@ -107,9 +107,10 @@ router.put("/:id", upload.single("image_url"), function(req, res, next) {
       } else {
         savePost(post, res, post_id);
       }
+    } else {
+      res.status(401).send("Unauthorized");
     }
   });
-  // TODO: add unauthorize message response
 });
 
 router.delete("/:id", function(req, res) {

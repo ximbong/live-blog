@@ -5,21 +5,24 @@ const express = require("express"),
 
 router.put("/:id", function(req, res) {
   const post_id = req.params.id;
+  const { username } = req.user;
 
   const featuredPost = new Featured({
     data: post_id
   });
 
-  featuredPost.save(function(err, post) {
-    if (err) return console.error(err);
-    res.json(post);
-  });
+  if (username === "admin") {
+    featuredPost.save(function(err, post) {
+      if (err) return console.error(err);
+      res.json(post);
+    });
+  } else {
+    res.status(401).send("Unauthorized");
+  }
 });
 
 router.get("/limit/:quantity", function(req, res) {
   const quantity = parseInt(req.params.quantity, 10);
-
-  console.log(quantity);
 
   Featured.find({})
     .limit(quantity)
