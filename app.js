@@ -38,7 +38,7 @@ app.use(
 
 app.use(
   session({
-    secret: "ximbong91023",
+    secret: key.secret,
     resave: true,
     saveUninitialized: true
   })
