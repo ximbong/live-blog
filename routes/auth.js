@@ -4,7 +4,9 @@ const express = require("express"),
   User = require("../models/user");
 
 router.get("/", function(req, res) {
-  res.send(true);
+  res.json({
+    username: req.user || null
+  });
 });
 
 module.exports = router;

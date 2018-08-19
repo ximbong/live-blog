@@ -6,7 +6,9 @@ const express = require("express"),
 //handling user sign up
 router.get("/", function(req, res) {
   req.logout();
-  res.send(true);
+  res.json({
+    username: req.user || null
+  });
 });
 
 module.exports = router;
