@@ -6,38 +6,49 @@ import category from "../../category";
 import "./index.css";
 
 const SectionLine = props => {
-  let title = "";
+  const path = props.location.pathname;
+  const higherEndPoint = path.split("/")[1];
+  const lowerEndPoint = path.split("/")[2];
 
-  switch (props.action) {
-    case "add":
+  // Ex: path = "/new", higherEndPoint = "new"
+  // Ex: path = "/category/politics", higherEndPoint = "category", lowerEndPoint ="politics"
+
+  let title = "";
+  switch (higherEndPoint) {
+    case "new":
       title = "New Post";
       break;
-    case "view_list":
+    case "profile":
       title = "My Posts";
       break;
-    case "view":
+    case "post":
       title = "View Post";
       break;
-    case "view_category":
-      const name = props.match.params.name;
-      title = category[name];
-      break;
-    case "view_featured":
+    case "featured":
       title = "Featured Posts";
       break;
-    default:
+    case "edit":
       title = "Edit Post";
+      break;
+    case "category":
+      title = category[lowerEndPoint];
+      break;
+    default:
+      title = "";
+      break;
   }
 
   return (
-    <div className="section-line">
-      <a className="section-title">{title}</a>
-      {props.action === "view_list" && (
-        <Link className="link-button" to="/new">
-          <button>New post</button>
-        </Link>
-      )}
-    </div>
+    title && (
+      <div className="section-line">
+        <div className="section-title">{title}</div>
+        {higherEndPoint === "profile" && (
+          <Link className="link-button" to="/new">
+            <button>New post</button>
+          </Link>
+        )}
+      </div>
+    )
   );
 };
 

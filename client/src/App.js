@@ -82,9 +82,11 @@ class App extends Component {
               <NavBar {...props} handleLogOut={this.handleLogOut} />
             )}
           />
+
+          <Route path="/" render={props => <SectionLine {...props} />} />
+
           <Route path="/" exact={true} render={() => <Main />} />
 
-          <Route path="/new" render={() => <SectionLine action="add" />} />
           <Route
             path="/new"
             render={props => <Editor action="add" {...props} />}
@@ -92,41 +94,21 @@ class App extends Component {
 
           <Route
             path="/post/:id"
-            render={() => <SectionLine action="view" />}
-          />
-          <Route
-            path="/post/:id"
             render={props => <Displayer {...props} username={username} />}
           />
 
           <Route
             path="/edit/:id"
-            render={() => <SectionLine action="edit" />}
-          />
-          <Route
-            path="/edit/:id"
             render={props => <Editor action="edit" {...props} />}
           />
 
-          <Route
-            path="/profile"
-            render={() => <SectionLine action="view_list" />}
-          />
           <Route path="/profile" render={() => <Profile />} />
 
-          <Route
-            path="/category/:name"
-            render={props => <SectionLine action="view_category" {...props} />}
-          />
           <Route
             path="/category/:name"
             render={props => <Category {...props} />}
           />
 
-          <Route
-            path="/featured"
-            render={() => <SectionLine action="view_featured" />}
-          />
           <Route path="/featured" render={() => <Featured />} />
         </React.Fragment>
       </Router>
