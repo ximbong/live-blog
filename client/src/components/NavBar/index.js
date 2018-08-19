@@ -9,15 +9,16 @@ import "./index.css";
 const NavBar = props => {
   const location = props.location.pathname;
 
-  const LeftNavButton = location.includes("/simple-blog") ? (
-    <Link to="/new">
-      <button>New post</button>
-    </Link>
-  ) : (
-    <Link to="/simple-blog">
-      <button>Back to Home</button>
-    </Link>
-  );
+  const LeftNavButton =
+    location === "/" ? (
+      <Link to="/new">
+        <button>New post</button>
+      </Link>
+    ) : (
+      <Link to="/">
+        <button>Back to Home</button>
+      </Link>
+    );
 
   const AvatarDropdown = (
     <div className="avatar-dropdown">
@@ -34,7 +35,7 @@ const NavBar = props => {
   const Nav = (
     <nav>
       {LeftNavButton}
-      <Link to="/simple-blog">
+      <Link to="/">
         <img src={MainIcon} alt="main-logo" className="main-logo" />
       </Link>
       <div className="avatar">

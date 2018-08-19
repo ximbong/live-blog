@@ -78,7 +78,7 @@ class LoginForm extends Component {
 
     return (
       <div className="wrap">
-        {redirect && <Redirect to={`/simple-blog`} />}
+        {redirect && <Redirect to="/" />}
         <div className="container">
           <div className="background" />
           <div className="logo" />

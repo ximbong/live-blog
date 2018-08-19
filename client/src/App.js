@@ -23,9 +23,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenticated: false,
       loader: true,
-      username: ""
+      username: null
     };
   }
 
@@ -33,34 +32,30 @@ class App extends Component {
     this.checkAuth();
   };
 
-  //submit (register/login) state is checked in loginForm
   handleLogIn = username => {
     this.setState({
-      authenticated: true,
       username
     });
   };
 
   handleLogOut = () => {
     fetch("/logout")
-      .then(res => res.text())
+      .then(res => res.json())
       .then(res => {
-        if (res === "true") {
-          this.setState({
-            authenticated: false
-          });
-        }
+        console.log(res);
+        this.setState({
+          username: res.username
+        });
       });
   };
 
   checkAuth = () => {
     fetch("/auth")
-      .then(res => res.text())
+      .then(res => res.json())
       .then(res => {
         setTimeout(() => {
-          const isAuthenticated = res === "true"; //res is a string
           this.setState({
-            authenticated: isAuthenticated,
+            username: res.username,
             loader: false
           });
         }, 2000);
@@ -68,7 +63,7 @@ class App extends Component {
   };
 
   render() {
-    const { authenticated, loader, username } = this.state;
+    const { loader, username } = this.state;
 
     const Routes = (
       <Router>
@@ -78,15 +73,16 @@ class App extends Component {
               path="/login"
               render={() => <LoginForm handleLogIn={this.handleLogIn} />}
             />
-            {!authenticated && !loader && <Redirect to="/login" />}
+            {!username && !loader && <Redirect to="/login" />}
           </Switch>
+
           <Route
             path="/"
             render={props => (
               <NavBar {...props} handleLogOut={this.handleLogOut} />
             )}
           />
-          <Route path="/simple-blog" exact={true} render={() => <Main />} />
+          <Route path="/" exact={true} render={() => <Main />} />
 
           <Route path="/new" render={() => <SectionLine action="add" />} />
           <Route
