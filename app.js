@@ -26,8 +26,8 @@ const mongoDB = `mongodb://${key.mLab_ID}:${
 
 mongoose.connect(mongoDB);
 
-// Serve React app
-app.use(express.static(path.join(__dirname, "client/build")));
+// Serve any static files
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 app.use(express.json());
 app.use(
@@ -55,8 +55,9 @@ app.use("/register", registerRoutes);
 app.use("/login", loginRoutes);
 app.use("/logout", logoutRoutes);
 
+//routes that require login
 app.use("/category", loggedIn, categoryRoutes);
-app.use("/featured", featuredRoutes);
+app.use("/featured", loggedIn, featuredRoutes);
 app.use("/post", loggedIn, postRoutes);
 app.use("/profile", loggedIn, profileRoutes);
 app.use("/auth", loggedIn, authRoutes);
