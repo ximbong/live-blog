@@ -55,7 +55,7 @@ class Displayer extends Component {
           </Link>
         </div>
         <div className="delete">
-          <Link to={`/simple-blog`}>
+          <Link to={`/`}>
             <i className="fa fa-trash" onClick={this.handleDelete} />
           </Link>
         </div>
