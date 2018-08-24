@@ -26,9 +26,6 @@ const mongoDB = `mongodb://${key.mLab_ID}:${
 
 mongoose.connect(mongoDB);
 
-// Serve any static files
-app.use(express.static(path.join(__dirname, "./client/build")));
-
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -62,6 +59,10 @@ app.use("/post", loggedIn, postRoutes);
 app.use("/profile", loggedIn, profileRoutes);
 app.use("/auth", loggedIn, authRoutes);
 app.use("/popular", loggedIn, popularRoutes);
+
+// Serve any static files
+app.use(express.static(path.join(__dirname, "./client/build")));
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, "./client/build/index.html")))
 
 const port = process.env.PORT || 5000;
 
