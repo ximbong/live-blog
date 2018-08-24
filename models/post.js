@@ -10,6 +10,7 @@ const postSchema = new Schema({
   image_url: String,
   views: { type: Number, index: true },
   author: { type: Schema.Types.ObjectId, ref: "User" },
+  date: { type: Date },
   author_username: String //denormalize for post preview
 });
 

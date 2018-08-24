@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import category from "../../category";
 import defaultImg from "../../assets/main-icon.png";
@@ -11,6 +12,7 @@ const Post = props => {
     _id,
     author_username,
     image_url,
+    date,
     category: category_id
   } = props.data;
 
@@ -35,7 +37,7 @@ const Post = props => {
             <div className="info">
               Author {author_username} in {category_name}
             </div>
-            <div className="date">Jul 2</div>
+            <div className="date">{date ? moment(date).format('ll') : "Jul 22, 2018"}</div>
           </div>
         </div>
       </div>

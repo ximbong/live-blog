@@ -18,6 +18,7 @@ const upload = multer({ dest: "../tmp/uploads" });
 
 const savePost = (post, res, _id) => {
   if (_id) {
+    //ID exists => find post and edit
     Post.findOneAndUpdate({ _id }, { $set: post }, function(err, posts) {
       err ? console.log(err) : res.json(posts);
     });
@@ -74,7 +75,8 @@ router.post("/", upload.single("image_url"), function(req, res, next) {
     author: _id,
     author_username: username,
     views: 1,
-    ...req.body
+    ...req.body,
+    date: Date.now()
   };
 
   if (req.file) {
@@ -96,7 +98,8 @@ router.put("/:id", upload.single("image_url"), function(req, res, next) {
       const post = {
         author: _id,
         author_username: username,
-        ...req.body
+        ...req.body,
+        date: Date.now()
       };
 
       if (req.file) {
