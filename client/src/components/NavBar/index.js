@@ -11,7 +11,7 @@ const NavBar = props => {
 
   const LeftNavButton =
     location === "/" ? (
-      <Link to="/new">
+      <Link to="/post/new">
         <button>New post</button>
       </Link>
     ) : (

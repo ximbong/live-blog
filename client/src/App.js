@@ -82,33 +82,30 @@ class App extends Component {
               <NavBar {...props} handleLogOut={this.handleLogOut} />
             )}
           />
-
           <Route path="/" render={props => <SectionLine {...props} />} />
+          <Route path="/" exact render={() => <Main />} />
 
-          <Route path="/" exact={true} render={() => <Main />} />
-
-          <Route
-            path="/new"
-            render={props => <Editor action="add" {...props} />}
-          />
-
-          <Route
-            path="/post/:id"
-            render={props => <Displayer {...props} username={username} />}
-          />
-
-          <Route
-            path="/edit/:id"
-            render={props => <Editor action="edit" {...props} />}
-          />
+          <Switch>
+            <Route
+              path="/post/new"
+              render={props => <Editor action="add" {...props} />}
+            />
+            <Route
+              exact
+              path="/post/:id"
+              render={props => <Displayer {...props} username={username} />}
+            />
+            <Route
+              path="/post/:id/edit"
+              render={props => <Editor action="edit" {...props} />}
+            />
+          </Switch>
 
           <Route path="/profile" render={() => <Profile />} />
-
           <Route
             path="/category/:name"
             render={props => <Category {...props} />}
           />
-
           <Route path="/featured" render={() => <Featured />} />
         </React.Fragment>
       </Router>

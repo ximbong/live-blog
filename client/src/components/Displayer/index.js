@@ -50,7 +50,7 @@ class Displayer extends Component {
     const sideButtons = (
       <div className="header-icons">
         <div className="edit">
-          <Link to={`/edit/${_id}`}>
+          <Link to={`/post/${_id}/edit`}>
             <i className="fa fa-pencil" />
           </Link>
         </div>
