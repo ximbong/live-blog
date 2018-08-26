@@ -7,31 +7,36 @@ import "./index.css";
 
 const SectionLine = props => {
   const path = props.location.pathname;
-  const higherEndPoint = path.split("/")[1];
-  const lowerEndPoint = path.split("/")[2];
+  const pathArray = path.split("/");
+  const firstEndPoint = pathArray[1];
+  const secondEndPoint = pathArray[2];
+  const lastEndPoint = pathArray[3];
 
-  // Ex: path = "/new", higherEndPoint = "new"
-  // Ex: path = "/category/politics", higherEndPoint = "category", lowerEndPoint ="politics"
+  // Ex: path = "/profile", firstEndPoint = "profile"
+  // Ex: path = "/category/politics", secondEndPoint ="politics"
+  // Ex: path = "/post/:id/edit", lastEndPoint ="edit"
+
+  const isAtProfile = firstEndPoint === "profile";
 
   let title = "";
-  switch (higherEndPoint) {
-    case "new":
-      title = "New Post";
-      break;
+  switch (firstEndPoint) {
     case "profile":
       title = "My Posts";
-      break;
-    case "post":
-      title = "View Post";
       break;
     case "featured":
       title = "Featured Posts";
       break;
-    case "edit":
-      title = "Edit Post";
-      break;
     case "category":
-      title = category[lowerEndPoint];
+      title = category[secondEndPoint];
+      break;
+    case "post":
+      if (lastEndPoint === "edit") {
+        title = "Edit Post";
+      } else if (secondEndPoint === "new") {
+        title = "New Post";
+      } else {
+        title = "View Post";
+      }
       break;
     default:
       title = "";
@@ -42,8 +47,8 @@ const SectionLine = props => {
     title && (
       <div className="section-line">
         <div className="section-title">{title}</div>
-        {higherEndPoint === "profile" && (
-          <Link className="link-button" to="/new">
+        {isAtProfile && (
+          <Link className="link-button" to="/post/new">
             <button>New post</button>
           </Link>
         )}
