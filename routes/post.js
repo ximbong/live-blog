@@ -45,8 +45,8 @@ router.get("/:id", function(req, res) {
   const { username } = req.user;
 
   Post.findById(post_id, function(err, post) {
-    if (post.author_username === username) {
-      //views increment doesn't count if the author views
+    if (post.author_username !== username) {
+      //views increment doesn't count if the author views their own posts
       post.views += 1;
       post.save(function(err) {
         if (err) return console.error(err);
