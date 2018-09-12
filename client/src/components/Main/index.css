@@ -186,6 +186,11 @@ section {
   overflow: hidden;
 }
 
+.tooltip {
+  font-style: italic;
+  font-size: 80%;
+}
+
 @media (max-width: 1000px) {
   .featured {
     grid-template-columns: 1fr 1fr;

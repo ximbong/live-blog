@@ -82,6 +82,9 @@ class Main extends React.Component {
             <div className="popular-col">
               <div className="col-title title">Popular posts</div>
               <div className="col-details">{PopularPostList}</div>
+              <div className="tooltip">
+                Views only count if the viewer is not the author of that post
+              </div>
             </div>
           </div>
         </section>
