@@ -13,7 +13,7 @@
   background-repeat: no-repeat;
   background-position: center center;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -165,23 +165,17 @@ input:-webkit-autofill:active {
 }
 @media (max-height: 650px) {
   .container {
-    padding: 25px 40px 10px 40px;
+    padding: 45px 40px 15px 40px;
     width: 450px;
   }
   .logo,
   #submit {
-    margin-bottom: 20px;
-  }
-  .field {
     margin-bottom: 30px;
   }
 }
 @media (max-height: 560px) {
   .login-title {
     font-size: 28px;
-  }
-  .logo {
-    display: none;
   }
   .field {
     margin-bottom: 30px;

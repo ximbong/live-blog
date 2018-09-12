@@ -164,7 +164,7 @@ section {
 
 .section-side .post {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 30px auto;
   grid-gap: 15px;
   margin-bottom: 24px;
   font-size: 90%;
