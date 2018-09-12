@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import category from "../../category";
 
@@ -9,7 +10,8 @@ const PopularPost = ({ data, rank }) => {
     description,
     _id,
     author_username,
-    category: category_id
+    category: category_id,
+    date
   } = data;
 
   const category_name = category[category_id];
@@ -24,7 +26,6 @@ const PopularPost = ({ data, rank }) => {
           <div className="info">
             Author {author_username} in {category_name}
           </div>
-          <div className="date">Jul 2</div>
         </div>
       </div>
     </Link>
