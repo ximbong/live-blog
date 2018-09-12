@@ -70,6 +70,17 @@
   justify-content: space-between;
 }
 
+.submit:hover {
+  background: #69a97b;
+  color: white;
+}
+
+.disabled:hover {
+  background: #cf493e;
+  color: white;
+  cursor: not-allowed;
+}
+
 @media (max-width: 800px) {
   .editor .inputs {
     grid-gap: var(--side-padding);

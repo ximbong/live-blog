@@ -126,6 +126,8 @@ class Editor extends Component {
       );
     });
 
+    const canBeSubmitted = title && description && content;
+
     return (
       <div className="editor">
         <div className="inputs">
@@ -175,7 +177,13 @@ class Editor extends Component {
           onChange={e => this.handle(e, "content")}
         />
         <div className="buttons">
-          <button onClick={this.handleSubmit}>Save</button>
+          <button
+            disabled={!canBeSubmitted}
+            className={canBeSubmitted ? "submit" : "submit disabled"}
+            onClick={this.handleSubmit}
+          >
+            Save
+          </button>
           <button onClick={history.goBack}>Cancel</button>
         </div>
         {redirect && <Redirect to={`/post/${_id}`} />}
